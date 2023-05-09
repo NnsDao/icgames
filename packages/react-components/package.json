@@ -1,0 +1,11 @@
+{
+  "name": "@horse-racing/react-components",
+  "version": "0.0.5",
+  "main": "index.js",
+  "author": "Horse Racing Winner",
+  "license": "ISC",
+  "dependencies": {
+    "@horse-racing/react-wallet": "0.0.5",
+    "antd": "^4.16.6"
+  }
+}

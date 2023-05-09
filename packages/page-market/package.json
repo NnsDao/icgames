@@ -1,0 +1,7 @@
+{
+  "name": "@horse-racing/page-market",
+  "version": "0.0.5",
+  "main": "index.js",
+  "author": "Horse Racing Winner",
+  "license": "ISC"
+}

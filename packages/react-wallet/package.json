@@ -1,0 +1,14 @@
+{
+  "name": "@horse-racing/react-wallet",
+  "version": "0.0.5",
+  "main": "index.js",
+  "author": "Horse Racing Winner",
+  "license": "ISC",
+  "dependencies": {
+    "@horse-racing/app-config": "0.0.5",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "ethers": "^5.6.2",
+    "react-device-detect": "^1.17.0"
+  }
+}

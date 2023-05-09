@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <defs>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#5745DE" offset="0%"></stop>
+            <stop stop-color="#EC64DE" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="linearGradient-2">
+            <stop stop-color="#5745DE" offset="0%"></stop>
+            <stop stop-color="#EC64DE" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="home-page" transform="translate(-992.000000, -1628.000000)">
+            <g id="编组-52" transform="translate(80.000000, 1532.000000)">
+                <g id="编组-21" transform="translate(349.000000, 80.000000)">
+                    <g id="编组-35" transform="translate(563.000000, 16.000000)">
+                        <path d="M10,0.7 C12.5681252,0.7 14.8931253,1.74093729 16.576094,3.423906 C18.2590627,5.1068747 19.3,7.43187475 19.3,10 C19.3,12.5681252 18.2590627,14.8931253 16.576094,16.576094 C14.8931253,18.2590627 12.5681253,19.3 10,19.3 C7.43187475,19.3 5.1068747,18.2590627 3.423906,16.576094 C1.74093729,14.8931253 0.7,12.5681253 0.7,10 C0.7,7.43187475 1.74093729,5.1068747 3.423906,3.423906 C5.1068747,1.74093729 7.43187475,0.7 10,0.7 Z" id="路径" stroke="url(#linearGradient-1)" stroke-width="1.4" fill-rule="nonzero"></path>
+                        <polyline id="路径" stroke="url(#linearGradient-2)" stroke-width="1.5" points="14.638404 8.2994634 10 12.7994634 5.36159601 8.2994634"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

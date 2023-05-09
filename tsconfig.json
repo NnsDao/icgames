@@ -1,0 +1,36 @@
+{
+  "extends": "@horse-racing/dev/config/tsconfig.json",
+  "exclude": ["build/**/*", "**/build/**/*"],
+  "compilerOptions": {
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@horse-racing/app": ["packages/app/src"],
+      "@horse-racing/app/*": ["packages/app/src/*"],
+      "@horse-racing/app-config": ["packages/app-config/src"],
+      "@horse-racing/app-config/*": ["packages/app-config/src/*"],
+      "@horse-racing/react-components": ["packages/react-components/src"],
+      "@horse-racing/react-components/*": ["packages/react-components/src/*"],
+      "@horse-racing/react-hooks": ["packages/react-hooks/src"],
+      "@horse-racing/react-hooks/*": ["packages/react-hooks/src/*"],
+      "@horse-racing/react-wallet": ["packages/react-wallet/src"],
+      "@horse-racing/react-wallet/*": ["packages/react-wallet/src/*"],
+      "@horse-racing/page-blind-box": ["packages/page-blind-box/src"],
+      "@horse-racing/page-blind-box/*": ["packages/page-blind-box/src/*"],
+      "@horse-racing/page-home": ["packages/page-home/src"],
+      "@horse-racing/page-home/*": ["packages/page-home/src/*"],
+      "@horse-racing/page-market": ["packages/page-market/src"],
+      "@horse-racing/page-market/*": ["packages/page-market/src/*"],
+      "@horse-racing/page-nft-list": ["packages/page-nft-list/src"],
+      "@horse-racing/page-nft-list/*": ["packages/page-nft-list/src/*"],
+      "@horse-racing/page-start-game": ["packages/page-start-game/src"],
+      "@horse-racing/page-start-game/*": ["packages/page-start-game/src/*"],
+      "@horse-racing/service": ["packages/service/src"],
+      "@horse-racing/service/*": ["packages/service/src/*"]
+    },
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types"]
+  }
+}
