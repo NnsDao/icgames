@@ -30,7 +30,7 @@ const SelectWrapper = styled.div`
   text-align:center;
   margin: 0 auto;
   h1 {
-    color: #000;
+    color: #fff;
     font-size: 38px;
     ${media('lg')} {
       font-size: 20px;
@@ -43,7 +43,7 @@ const ListWrapper = styled.div`
   text-align:center;
   margin: 0 auto;
   h1 {
-    color: #000;
+    color: #fff;
     font-size: 38px;
   }
   ${media('lg')} {
@@ -56,8 +56,10 @@ const HeaderWrapper = styled.div`
   ${paddingMedia(0.4, 0.4, 1.5, 1.5)}
   font-weight:bold;
   font-size: 14px;
-  color: #5f5f5f;
-  border-bottom: 1px solid #f5f5f5;
+  color: #ddebe3;
+  border: 1px solid #fff;
+  border-top-left-radius: 30px 30px;
+  border-top-right-radius: 30px 30px;
   ul {
     width: 100%;
   }
@@ -87,9 +89,8 @@ const HeaderWrapper = styled.div`
 const RankContent = styled.div`
   font-weight: bold;
   font-size: 16px;
-  color: #5f5f5f;
-  border-bottom: 1px solid #f5f5f5;
-
+  color: #fff;
+  border: 1px solid #ffffff;
   ul {
     width: 100%;
   }
@@ -103,12 +104,13 @@ const RankContent = styled.div`
     cursor: pointer;
     ${paddingMedia(0.5, 0.5, 1, 1.5)}
     &:hover {
-      background: #f5f5f5;
+      background: #000;
+      opacity: 0.8;
       border-radius: 8px;
     }
   }
   .cell {
-    color: #000;
+    color: #fff;
     display: inline-block;
     vertical-align: middle;
     width: 18%;
@@ -134,7 +136,7 @@ const RankContent = styled.div`
     text-align: left;
     width: 28%;
     font-size: 14px;
-    color: #000;
+    color: #fff;
     span {
       display: inline-block;
       vertical-align: middle;
@@ -223,11 +225,11 @@ const Rank: React.FC = () => {
   const [isActive, setActive] = useState(1);
   const [fetching, setFetching] = useState(false);
   const [headConfig, setHeadConfig] = useState([
-    { label: 'COLLECTIONS', isSort: false },
-    { label: 'VOLUME', isSort: true, isAsc: false },
-    { label: '% CHANGE', isSort: true, isAsc: false },
-    { label: 'FLOOR PRICE', isSort: true, isAsc: false },
-    { label: 'ITEMS', isSort: false }
+    { label: 'name', isSort: false },
+    { label: 'Manufacturer', isSort: false, isAsc: false },
+    { label: 'Category', isSort: false },
+    { label: 'PRICE', isSort: false, isAsc: false },
+    { label: '% Rate', isSort: false, isAsc: false }
   ]);
 
   useEffect(() => {
@@ -301,7 +303,7 @@ const Rank: React.FC = () => {
                 {headConfig.map((item, index) => (
                   <div
                     key={index}
-                    style={{ color: isActive == index ? '#000' : '' }}
+                    style={{ color: isActive == index ? '#fff' : '' }}
                     onClick={() => tabClick(index)}
                   >
                     {item.label}

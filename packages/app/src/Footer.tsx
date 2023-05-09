@@ -43,7 +43,7 @@ const Subscribe = styled.div`
     }
   }
   .ant-input-group-wrapper {
-    width: 40%;
+    width: 35%;
 
     ${media('lg')} {
       ${paddingMedia(1, 0, 0.5, 0.5)}
@@ -53,29 +53,37 @@ const Subscribe = styled.div`
     }
   }
   .ant-input-group-addon {
-    border: 1px solid #fff;
-    border-radius: 0px 4px 4px 0px;
+    z-index: 9999;
+    border: 1px solid #d5ff40;
+    width: 50px;
+    position: absolute;
+    right: 1%;
+    margin-right: -10px;
+    height: 50px;
+    border-radius: 25px;
     background-color: transparent;
     img {
       display: block;
-      width: 30px;
+      height: 50px;
+      margin-left: 5px;
+      width: 13px;
     }
     &:hover {
       cursor: pointer;
-      background-color: #fff;
       img {
-        filter: brightness(0);
+        filter: brightness(1);
       }
     }
   }
   .ant-input {
     height: 50px;
     font-size: 20px;
-    ${paddingMedia(0, 0, 0.5, 0.5)}
+    ${paddingMedia(0, 0, 0.5, 0.5)};
     background-color: transparent;
-    border: 1px solid #fff;
-    border-radius: 4px 0 0 4px;
-    color: #fff;
+    border: 1px solid #d5ff40;
+    color: #ddebe3;
+    opacity: 0.8;
+    border-radius: 40px;
     border-right: 0;
     ::placeholder {
       color: #5f5f5f;
@@ -98,13 +106,13 @@ const InfoWrapper = styled.div`
     display: block;
   }
   .logo {
-    width: 140px;
+    width: 146px;
     display: flex;
     justify-content: center;
     align-items: center;
     img {
-      width: 65px;
-      height: auto;
+      width: 146px;
+      height: 30px;
       display: block;
     }
     .logo-name {
@@ -115,14 +123,16 @@ const InfoWrapper = styled.div`
     }
   }
   .intro {
+    color: #ddebe3;
     ${marginMedia(1)}
   }
   .copyright {
     ${marginMedia(1.6)}
-    color:#5f5f5f;
+    color: #DDEBE3;
+    opacity: 0.3;
     font-size: 16px;
     ${media('lg')} {
-      margin-top: 100px;
+      margin-top: 33px;
     }
   }
 `;
@@ -226,9 +236,11 @@ const Footer: React.FC = () => {
     <Wrapper>
       <Content>
         <Subscribe>
-          <span className="label">{enter ? 'SUBSCRIBE' : 'SUBSCRIBE'}</span>
+          <span className="label">
+            {enter ? 'SUBSCRIBE' : <img src="/images/icgame-logo.svg" />}
+          </span>
           <Input
-            addonAfter={<img onClick={submit} src="/images/arrow.svg" />}
+            addonAfter={<img onClick={submit} src="/images/right-arrow.svg" />}
             onBlur={() => {
               setEnter(false);
             }}
@@ -244,10 +256,10 @@ const Footer: React.FC = () => {
         <InfoWrapper>
           <div className="info">
             <div className="logo">
-              <img src="/images/icgames-logo.svg" />
+              <img src="/images/icgame-logo.svg" />
             </div>
             <div className="intro">Discover Your favorite web3 Game on ICgames.</div>
-            <div className="copyright">© 2021 - 2023 ICgames</div>
+            <div className="copyright">© 2023 ICgames</div>
           </div>
           <Links>
             {mediaLinks.map(({ icon, open, to }, index) => (

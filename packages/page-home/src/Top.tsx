@@ -24,15 +24,15 @@ const Wrapper = styled.div`
   }
   img {
     flex: 2;
-    width: 460px;
+    width: 535px;
     box-sizing: border-box;
     ${marginMedia(0, 0, 0.5, 1.6)}
-    border-radius:5px;
+    border-radius: 32px;
     &:hover {
       cursor: pointer;
     }
     ${media('lg')} {
-      width: 350px;
+      width: 535px;
       display: block;
       margin: 0 auto;
     }
