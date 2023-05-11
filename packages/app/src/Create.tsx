@@ -5,7 +5,7 @@ import media, { marginMedia, paddingMedia } from '@horse-racing/react-components
 
 const Wrapper = styled.div`
   > .upper-part {
-    height: 266px;
+    height: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,43 +15,17 @@ const Wrapper = styled.div`
     ${paddingMedia(1.55, 0, 0, 0)}
     > .left {
       ${marginMedia(0, 0, 0, 1.75)}
-      height: 141px;
-      width: 156px;
+      position: absolute;
+      width: 732px;
+      height: 732px;
+      left: 0px;
+      top: -163px;
+      background: #d5ff40;
+      opacity: 0.5;
+      filter: blur(400px);
       ${media('lg')} {
         height: 0px;
         width: 0px;
-      }
-      > .left-group {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        > .left-img {
-          height: 77px;
-          width: 77px;
-          ${media('lg')} {
-            height: 0px;
-            width: 0px;
-          }
-        }
-        > .left-img2 {
-          margin-left: 18px;
-          margin-top: 20px;
-          height: 58px;
-          width: 58px;
-          ${media('lg')} {
-            height: 0px;
-            width: 0px;
-          }
-        }
-      }
-      > .left-img3 {
-        ${marginMedia(0.425, 0, 1.75, 0)}
-        height: 47px;
-        width: 47px;
-        ${media('lg')} {
-          height: 0px;
-          width: 0px;
-        }
       }
     }
     > .middle {
@@ -64,57 +38,42 @@ const Wrapper = styled.div`
         font-size: 48px;
         font-family: Outfit-SemiBold, Outfit;
         font-weight: 600;
-        color: #000000;
         line-height: 60px;
         letter-spacing: 1px;
         ${media('lg')} {
           font-size: 20px;
           font-family: Outfit-SemiBold, Outfit;
           font-weight: 600;
-          color: #000000;
           line-height: 25px;
         }
       }
+      .middle-font {
+        color: #d5ff40;
+      }
       > .button-apply {
         ${marginMedia(1, 0, 0, 0)}
-        width: 200px;
-        height: 46px;
-        background: rgba(22, 22, 23, 0.8);
-        border-radius: 2px;
+        width: 240px;
+        height: 68px;
+        background: #d5ff40;
+        border-radius: 1000px;
         display: flex;
         align-items: center;
         justify-content: center;
         > .font-apply {
-          font-size: 16px;
-          font-family: Outfit-SemiBold, Outfit;
-          font-weight: 600;
-          color: #fcfcfd;
-          line-height: 20px;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 36px;
+          color: #000000;
         }
       }
       > .button-apply:hover {
         ${marginMedia(1, 0, 0, 0)}
-        width: 200px;
-        height: 46px;
-        background: rgba(22, 22, 23, 0.8);
-        border-radius: 2px;
-        opacity: 0.6;
+        width: 240px;
+        height: 68px;
+        opacity: 0.8;
         cursor: pointer;
-      }
-    }
-    > .right {
-      ${marginMedia(0, 0, 2.075, 0)}
-      > .right-img {
-        height: 141px;
-        width: 156px;
-        ${media('lg')} {
-          height: 0px;
-          width: 0px;
-        }
-      }
-      ${media('lg')} {
-        height: 0px;
-        width: 0px;
       }
     }
   }
@@ -122,122 +81,166 @@ const Wrapper = styled.div`
     ${marginMedia(0.7, 0, 2, 2)}
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     > .item {
       ${marginMedia(0.8, 0, 0.6, 0)}
-      width: 411px;
-      height: 265px;
-      border-radius: 8px;
-      border: 1px solid #f5f5f5;
+      width: 405.33px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 32px;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: start;
+      justify-content: start;
       flex-direction: column;
-      > .middle-img {
-        height: 68px;
-        width: 68px;
-      }
+      padding-top: 60px;
+      text-align: left;
       > .font-middle {
         ${marginMedia(0.6, 0, 0, 0)}
         font-size: 20px;
         font-family: Outfit-Bold, Outfit;
         font-weight: bold;
-        color: #000000;
+        color: #fff;
         line-height: 24px;
+        text-align: left;
+        padding-left: 40px;
       }
       > .font-below {
         ${marginMedia(0.325, 0, 0.6, 0.6)}
         font-size: 16px;
         font-family: Outfit-Regular, Outfit;
         font-weight: 400;
-        color: #5f5f5f;
+        color: #ffffff;
+        opacity: 0.8;
         line-height: 24px;
-        text-align: center;
+        text-align: left;
+        padding-left: 20px;
       }
     }
   }
   > .bottom {
     ${marginMedia(1.5, 2, 0, 0)}
-    border-radius: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     > .font-bottom {
-      font-size: 32px;
-      font-family: Outfit-SemiBold, Outfit;
-      font-weight: 600;
-      color: #000000;
-      line-height: 44px;
+      width: 1284px;
+      height: 112px;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 40px;
+      line-height: 56px;
+      text-align: center;
+
+      color: #ffffff;
       ${media('lg')} {
         font-size: 16px;
         font-family: Outfit-SemiBold, Outfit;
         font-weight: 600;
-        color: #000000;
+        color: #fff;
         line-height: 24px;
       }
     }
-    > .bottom-img {
-      ${marginMedia(1, 0, 0, 0)}
-      width: 444px;
-      height: 119px;
-      ${media('lg')} {
-        width: 299px;
-        height: 119px;
+    .button-wrap {
+      display: flex;
+      flex-wrap: nowrap;
+      > .bottom-button {
+        width: 145px;
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #fff;
+        border-radius: 1000px;
+        margin-left: 20px;
+        > .role-button {
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 60px;
+          color: #fff;
+        }
       }
     }
   }
 `;
 
+const gameList = [
+  {
+    name: 'Role Playing'
+  },
+  {
+    name: 'Turn-based RPG'
+  },
+  {
+    name: 'Casual'
+  },
+  {
+    name: 'Single player'
+  },
+  {
+    name: 'Stylized'
+  },
+  {
+    name: 'Anime'
+  }
+];
+
 const Create: React.FC = () => {
   return (
     <Wrapper>
       <div className="upper-part">
-        <div className="left">
-          <div className="left-group">
-            <img className="left-img" src="/images/create/left1.png" />
-            <img className="left-img2" src="/images/create/left3.png" />
-          </div>
-          <img className="left-img3" src="/images/create/left2.png" />
-        </div>
+        <div className="left"></div>
         <div className="middle">
-          <span className="font-create">Create auction,Mint,Staking</span>
+          <span className="font-create">
+            Unlock the full <span className="middle-font">Potential</span> of your game
+          </span>
           <div className="button-apply">
             <span className="font-apply">Apply</span>
           </div>
         </div>
-        <div className="right">
-          <img className="right-img" src="/images/create/right.png" />
-        </div>
       </div>
       <div className="middle-part">
         <div className="item">
-          <img className="middle-img" src="/images/create/middle1.png" />
-          <span className="font-middle">Low Fee</span>
+          <span className="font-middle">Deep Gaming Communities</span>
           <span className="font-below">
-            Our service fee of only 1% will be charged, and creators of collections may set a
-            royalty of about 10%.
+            Our platform boasts a wealth of deep gaming communities that have accumulated a huge
+            number of player resources, offering game developers an attractive market to tap into
+            that can boost game exposure and user retention.
           </span>
         </div>
         <div className="item">
-          <img className="middle-img" src="/images/create/middle2.png" />
-          <span className="font-middle">Non-custodial</span>
+          <span className="font-middle">Personalized Recommendation</span>
           <span className="font-below">
-            All assets remain in your full cntrol - we never take custody anu of your digital
-            assets.
+            Our platform offers personalized tag services that can help game developers precisely
+            target their games to the right users, thus increasing game conversion rates and
+            revenue.
           </span>
         </div>
         <div className="item">
-          <img className="middle-img" src="/images/create/middle3.png" />
-          <span className="font-middle">Staking Collections</span>
+          <span className="font-middle">Transparent Data Analytics</span>
           <span className="font-below">
-            We plan to give NFTs more attributes,such as pledges,derivatives,games,reputation.
+            Our platform provides transparent data analytics that allow game developers to better
+            understand player behavior and game performance, and make data-driven decisions for
+            better game optimization.
           </span>
         </div>
       </div>
       <div className="bottom">
-        <span className="font-bottom">Can you upload an NFT of that hit type?</span>
-        <img className="bottom-img" src="/images/create/below.png" />
+        <span className="font-bottom">
+          Get your game in front of the perfect players with our personalized game tags.
+        </span>
+        <div className="button-wrap">
+          {gameList.map((item, index) => (
+            <div className="bottom-button">
+              <div className="role-button" key={index}>
+                {item.name}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </Wrapper>
   );

@@ -71,7 +71,7 @@ const CellStyle = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
       font-size: 18px;
-      color: #000;
+      color: #fff;
       font-weight: bold;
     }
   }
@@ -88,7 +88,7 @@ const ItemWrapper = styled.div`
   ${marginMedia(0.5)};
   font-size: 14px;
   font-weight: bold;
-  color: #000;
+  color: #fff;
 
   &:not(:last-of-type) {
     ::after {
@@ -103,7 +103,7 @@ const ItemWrapper = styled.div`
 
   > label {
     display: block;
-    color: #5f5f5f;
+    color: #fff;
     font-weight: normal;
     ${marginMedia(0, 0.15)};
   }
@@ -114,7 +114,7 @@ const SelectWrapper = styled.div`
   text-align:center;
   h1 {
     letter-spacing: 1px;
-    color: #000;
+    color: #fff;
     font-size: 38px;
     ${media('lg')} {
       font-size: 20px;
@@ -124,26 +124,6 @@ const SelectWrapper = styled.div`
   ${media('lg')} {
     ${paddingMedia(0, 0, 0.5, 0.5)}
   }
-  .ant-input {
-    ${marginMedia(0.5)};
-    width: 50%;
-    ${media('lg')} {
-      width: 100%;
-    }
-    ${media('md')} {
-      width: 100%;
-    }
-    ${media('sm')} {
-      width: 100%;
-    }
-    ${paddingMedia(0.3, 0.3, 0.5, 0.5)}
-    background-color: transparent;
-    border: 1px solid;
-    border-image: linear-gradient(270deg, rgba(87, 69, 222, 1), rgba(236, 100, 222, 1)) 1 1;
-    border-radius: 2px;
-    clip-path: inset(0 round 2px);
-    color: #1e1e1e;
-  }
 `;
 
 const FilterWrapper = styled.div`
@@ -151,12 +131,39 @@ const FilterWrapper = styled.div`
   ${paddingMedia(0.1, 0.5, 0.5, 0.5)}
   ${marginMedia(2, 1)};
   border-radius: 10px;
-  color: #c3c6cc;
+  color: #fff;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+
+  .select-input {
+    width: 45%;
+  }
+
+  .select-input .ant-input {
+    ${marginMedia(0.5)};
+    width: 55%;
+    ${media('lg')} {
+      width: 80%;
+    }
+    ${media('md')} {
+      width: 70%;
+    }
+    ${media('sm')} {
+      width: 80%;
+    }
+    ${paddingMedia(0.3, 0.3, 0.5, 0.5)}
+    background-color: transparent;
+    border: 1px solid;
+    border-image: linear-gradient(270deg, rgba(87, 69, 222, 1), rgba(213, 255, 64, 1)) 1 1;
+    border-radius: 2px;
+    clip-path: inset(0 round 2px);
+    color: #fff;
+  }
 
   .select {
     width: 200px;
+    margin-top: 10px;
   }
 
   .select .ant-select-selector {
@@ -283,7 +290,9 @@ const Market: React.FC = () => {
     <Wrapper>
       <Content>
         <SelectWrapper>
-          <h1>All Collections</h1>
+          <h1>All Games</h1>
+        </SelectWrapper>
+        <FilterWrapper>
           <div className="select-input">
             <Input
               onChange={(e) => setCollectName(e.target.value)}
@@ -291,14 +300,12 @@ const Market: React.FC = () => {
               value={collectName}
             />
           </div>
-        </SelectWrapper>
-        <FilterWrapper>
           <Select
             className="select"
             onChange={(value) => {
               setSort(value);
             }}
-            placeholder="Sort By"
+            placeholder="Sort By Rate"
           >
             {Object.keys(sortOptions).map((key) => (
               <Option key={key} value={key}>
