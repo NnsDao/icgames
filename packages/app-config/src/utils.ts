@@ -1,3 +1,5 @@
+import { Principal } from '@dfinity/principal';
+
 export const formatImage = (imgSrc: string) => {
   if (imgSrc?.includes('ipfs:')) {
     imgSrc = imgSrc.replace(/ipfs:\//, 'https://ipfs.io/ipfs/');
@@ -5,7 +7,6 @@ export const formatImage = (imgSrc: string) => {
 
   return imgSrc;
 };
-
 
 export function returnTime(time: number) {
   if (isNaN(time) === true) return 'Error!' + '"' + time + '"' + ' is NaN';
@@ -24,19 +25,22 @@ export function returnTime(time: number) {
   }
 }
 
-export function currencyFormat(value:string, currency?:string, decimals?:number) {
-  const digitsRE = /(\d{3})(?=\d)/g
-  let _value = parseFloat(value)
-  if (!isFinite(_value) || (!_value && _value !== 0)) return ""
-  currency = currency != null ? currency : ""
-  decimals = decimals != null ? decimals : 0
-  let stringified = Math.abs(_value).toFixed(decimals)
-  let _int = decimals ? stringified.slice(0, -1 - decimals) : stringified
-  let i = _int.length % 3
-  let head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? "," : "") : ""
-  let _float = decimals ? stringified.slice(-1 - decimals) : ""
-  let sign = _value < 0 ? "-" : ""
-  return `${sign}${currency} ${head}${_int
-    .slice(i)
-    .replace(digitsRE, "$1,")}${_float}`
+export function currencyFormat(value: string, currency?: string, decimals?: number) {
+  const digitsRE = /(\d{3})(?=\d)/g;
+  let _value = parseFloat(value);
+  if (!isFinite(_value) || (!_value && _value !== 0)) return '';
+  currency = currency != null ? currency : '';
+  decimals = decimals != null ? decimals : 0;
+  let stringified = Math.abs(_value).toFixed(decimals);
+  let _int = decimals ? stringified.slice(0, -1 - decimals) : stringified;
+  let i = _int.length % 3;
+  let head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? ',' : '') : '';
+  let _float = decimals ? stringified.slice(-1 - decimals) : '';
+  let sign = _value < 0 ? '-' : '';
+  return `${sign}${currency} ${head}${_int.slice(i).replace(digitsRE, '$1,')}${_float}`;
 }
+
+export const shortPrincipal = (principal: string | Principal) => {
+  const parts = (typeof principal === 'string' ? principal : principal.toText()).split('-');
+  return `${parts[0]}...${parts.slice(-1)[0]}`;
+};

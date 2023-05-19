@@ -52,6 +52,8 @@
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
+    "@connect2ic/core": "^0.2.0-beta.5",
+    "@connect2ic/react": "^0.2.0-beta.5",
     "@nft-market/contracts-core": "^0.2.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lodash": "^0.1.2",

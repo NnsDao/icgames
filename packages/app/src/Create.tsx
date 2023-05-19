@@ -81,6 +81,8 @@ const Wrapper = styled.div`
     ${marginMedia(0.7, 0, 2, 2)}
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     > .item {
       ${marginMedia(0.8, 0, 0.6, 0)}
       width: 405.33px;

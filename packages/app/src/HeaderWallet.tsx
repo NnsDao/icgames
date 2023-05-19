@@ -1,14 +1,16 @@
-import { UnsupportedChainIdError } from '@web3-react/core';
-import { Button, Dropdown, Menu, message, Modal } from 'antd';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-
+import '@connect2ic/core/style.css';
+import { ConnectButton, ConnectDialog, useClient, useConnect, useWallet } from '@connect2ic/react';
+import { shortPrincipal } from '@horse-racing/app-config/utils';
 import { colorPrimary } from '@horse-racing/react-components/style';
 import { marginMedia, paddingMedia } from '@horse-racing/react-components/style/media';
-import { useWallet } from '@horse-racing/react-wallet';
-import { injected } from '@horse-racing/react-wallet/connectors';
-import { shortenAddress } from '@horse-racing/react-wallet/utils';
+import { Dropdown, Menu, message } from 'antd';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { _SERVICE as exampleService } from '../candid/example';
+// @ts-ignore
+import { idlFactory as exampleIdl } from '../candid/example.idl.js';
 
 const Wrapper = styled.div`
   .ant-btn{
@@ -23,7 +25,7 @@ const Wrapper = styled.div`
     }
   }
   .login-modal{
-    z-index:1000;
+    z-index:100000;
     .ant-modal-content{
         border-radius: 20px;
         height:280px;
@@ -37,31 +39,20 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
-  text-align:center;
-  margin:0 auto;
-  margin-top:30px;
-
-  h1{
-    font-size:32px;
-    color:#fff;
-    font-weight:normal;
+  display: flex;
+  flex: 1;
+  .dialog-styles {
+    height: 400px;
+    margint-top: 50%;
   }
-  button{
-    font-size:16px;
-    margin-top:30px;
-    ${paddingMedia(0.4, 0.4)}
-    line-height:1;
-    height:auto;
-    width:300px;
-    img{
-      margin-right:5px;
-    }
-    &:focus,
-    &:active,
-    &:hover{
-      background: rgba(22, 22, 23, .8);
-      opacity:0.6;
-    }
+`;
+
+const ButtonLogin = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  margin-top: 20px;
 `;
 
 const Address = styled.div`
@@ -69,15 +60,17 @@ const Address = styled.div`
   align-items: center;
   height: 30px;
   padding: 8px 10px;
-
   border-radius: 30px;
   border: 1px solid ${colorPrimary};
-
   cursor: pointer;
 
-  > img {
+  > a img {
     width: 18px;
+    height: 18px;
     margin-right: 8px;
+  }
+  > a span {
+    color: #fff;
   }
 `;
 
@@ -143,76 +136,43 @@ type LinkType = {
   children?: LinkType[];
 };
 
-const HeaderLink: React.FC<{ link: LinkType }> = ({ link: { children, open, title, to } }) => {
-  const { deactivate } = useWallet();
-
-  const _onClick = useCallback(
-    (e: React.MouseEvent) => {
-      if (!open) {
-        e.preventDefault();
-        message.info({ icon: ' ', content: 'Coming Soon' });
-
-        return;
-      }
-
-      if (to.startsWith('http')) {
-        e.preventDefault();
-
-        window.location.href = to;
-      }
-
-      if (to == 'Logout') {
-        e.preventDefault();
-        deactivate();
-      }
-    },
-    [open, to]
-  );
-
-  return children ? (
-    <Dropdown
-      overlay={
-        <Menu>
-          {children.map((link, index) => (
-            <Menu.Item key={String(index) + 'sub'}>
-              <HeaderLink link={link} />
-            </Menu.Item>
-          ))}
-        </Menu>
-      }
-      trigger={['click']}
-    >
-      <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-        {title}
-      </a>
-    </Dropdown>
-  ) : (
-    <Link onClick={_onClick} style={{ cursor: !open ? 'not-allowed' : undefined }} to={to}>
-      {title}
-    </Link>
-  );
-};
-
 interface HeaderWalletProps {
   onFilterChange: (newFilter: string) => void;
 }
 
 const HeaderWallet: React.FC<HeaderWalletProps> = ({ onFilterChange }) => {
-  const [visible, setVisible] = useState(false);
-  const { account, activate, active, error } = useWallet();
-  const { pathname } = useLocation();
-
-  // artwork reverse
-  const walletImg = useMemo(() => {
-    return pathname.indexOf('artworks') == -1 ? '/images/wallet.png' : '/images/wallet.png';
-  }, [pathname]);
-
-  const open = useCallback(() => setVisible(true), []);
-  const close = useCallback(() => setVisible(false), []);
+  // ic
+  const { isConnected, activeProvider, principal } = useConnect();
+  const client = useClient();
+  const [wallet] = useWallet();
+  const [balance, setBalance] = useState<boolean | string>(false);
+  const [loading, setLoading] = useState(false);
+  const [accountID, setAccount] = useState('');
+  // const [newActor, setNewActor] = useState<ActorSubclass<exampleService>>()
 
   useEffect(() => {
-    onFilterChange(visible ? 'none' : 'blur(10px)');
-  }, [visible]);
+    if (isConnected) {
+      console.log('activeProvider', wallet?.principal);
+      console.log('accountID', accountID);
+    }
+  }, [isConnected]);
+
+  const createActor = async (values: { canisterId: string }) => {
+    setLoading(true);
+    // @ts-ignore
+    const { value: actor } = await activeProvider.createActor<exampleService>(
+      values.canisterId,
+      exampleIdl
+    );
+    // setNewActor(actor)
+    console.log('actor', actor);
+    const result1 = await actor.created_apps();
+    console.log('result1', result1);
+    setLoading(false);
+  };
+
+  // ic end
+
   const links = useMemo((): LinkType[] => {
     return [
       {
@@ -226,13 +186,59 @@ const HeaderWallet: React.FC<HeaderWalletProps> = ({ onFilterChange }) => {
         open: true
       }
     ];
-  }, [account]);
+  }, [isConnected]);
 
-  if (error instanceof UnsupportedChainIdError) {
-    return <Error>Network Error</Error>;
-  }
+  const HeaderLink: React.FC<{ link: LinkType }> = ({ link: { children, open, title, to } }) => {
+    const { disconnect } = useConnect();
 
-  if (active && account) {
+    const _onClick = useCallback(
+      (e: React.MouseEvent) => {
+        if (!open) {
+          e.preventDefault();
+          message.info({ icon: ' ', content: 'Coming Soon' });
+
+          return;
+        }
+
+        if (to.startsWith('http')) {
+          e.preventDefault();
+
+          window.location.href = to;
+        }
+
+        if (to == 'Logout') {
+          e.preventDefault();
+          disconnect();
+        }
+      },
+      [open, to]
+    );
+
+    return children ? (
+      <Dropdown
+        overlay={
+          <Menu>
+            {children.map((link, index) => (
+              <Menu.Item key={String(index) + 'sub'}>
+                <HeaderLink link={link} />
+              </Menu.Item>
+            ))}
+          </Menu>
+        }
+        trigger={['hover']}
+      >
+        <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+          {title}
+        </a>
+      </Dropdown>
+    ) : (
+      <Link onClick={_onClick} style={{ cursor: !open ? 'not-allowed' : undefined }} to={to}>
+        {title}
+      </Link>
+    );
+  };
+
+  if (isConnected && principal) {
     return (
       <Account>
         <Dropdown
@@ -249,63 +255,21 @@ const HeaderWallet: React.FC<HeaderWalletProps> = ({ onFilterChange }) => {
         >
           <Address>
             <a onClick={(e) => e.preventDefault()}>
-              <img src={require('@horse-racing/app-config/assets/metamask.svg')} />
-              {shortenAddress(account)}
+              <img src={require('@horse-racing/app-config/assets/dfinity.svg')} />
+              <span>{shortPrincipal(principal)}</span>
             </a>
           </Address>
         </Dropdown>
-        {/* <Dropdown
-          overlay={
-            <MenuWallet>
-              <h5>My Wallet</h5>
-              <div>
-                <img src="/images/favicon.png" />
-                {shortenAddress(account)}
-              </div>
-            </MenuWallet>
-          }
-          placement="bottomCenter"
-          trigger={['click']}
-        >
-          <div className="wallet">
-            <img src={walletImg} />
-          </div>
-        </Dropdown> */}
       </Account>
     );
   }
 
   return (
     <Wrapper>
-      <Modal
-        closable
-        footer={null}
-        getContainer={false}
-        maskStyle={{ background: '#0f2' }}
-        onCancel={close}
-        open={visible}
-        title={null}
-        wrapClassName="login-modal"
-      >
-        <Content>
-          <h1>Connect Wallet</h1>
-          <Button
-            onClick={() => {
-              close();
-              activate(injected).catch(console.error);
-            }}
-            shape="round"
-            style={{ background: 'white' }}
-            type="ghost"
-          >
-            <img src={require('@horse-racing/app-config/assets/metamask.svg')} />
-            <span>MetaMask</span>
-          </Button>
-        </Content>
-      </Modal>
-      <Button onClick={open} type="primary">
-        Connect
-      </Button>
+      <ButtonLogin>{isConnected ? '' : <ConnectButton />}</ButtonLogin>
+      <Content>
+        <ConnectDialog />
+      </Content>
     </Wrapper>
   );
 };

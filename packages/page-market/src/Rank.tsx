@@ -214,7 +214,10 @@ const Cell: React.FC<cellProps> = ({ item, rank, sortkey }) => {
       <div className="cell">
         <FormatNumber balance={item.openseaStats?.floor_price} />
       </div>
-      <div className="cell">{currencyFormat(item.totalCount)}</div>
+      <div className="cell">
+        {' '}
+        <img src="/images/star.svg" /> {currencyFormat(item.totalCount)}
+      </div>
     </li>
   );
 };
@@ -229,7 +232,7 @@ const Rank: React.FC = () => {
     { label: 'Manufacturer', isSort: false, isAsc: false },
     { label: 'Category', isSort: false },
     { label: 'PRICE', isSort: false, isAsc: false },
-    { label: '% Rate', isSort: false, isAsc: false }
+    { label: 'Rate', isSort: false, isAsc: false }
   ]);
 
   useEffect(() => {

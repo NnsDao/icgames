@@ -94,9 +94,12 @@ const StyledDrawer = styled(Drawer)`
   .ant-menu {
     background-color: transparent;
   }
+  .ant-menu-title-content {
+    color: #fff;
+  }
 
   .ant-drawer-content {
-    background-color: #fff;
+    background-color: #000;
   }
   .ant-drawer-header {
     border-bottom-color: #464646;
@@ -197,7 +200,7 @@ const HeaderMbLink: React.FC<{ link: LinkType; onClose: () => void }> = ({
       ))}
     </Menu.SubMenu>
   ) : (
-    <Menu.Item {...props} onClick={_onClick} style={{ color: '#fff' }}>
+    <Menu.Item {...props} onClick={_onClick} style={{ color: '#000' }}>
       {title}
     </Menu.Item>
   );
@@ -252,6 +255,8 @@ const Header: React.FC = () => {
   }, []);
 
   const handleClick = (val: string) => {
+    console.log(val, 2929296666);
+
     setBackdropFilter(val);
   };
 
