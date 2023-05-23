@@ -1,11 +1,5 @@
 import { getAddress } from '@ethersproject/address';
 import { Grid } from '@horse-racing/react-components';
-import { Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import Slider from 'react-slick';
-import styled from 'styled-components';
-
 import media, {
   marginMedia,
   paddingMedia,
@@ -13,8 +7,14 @@ import media, {
 } from '@horse-racing/react-components/style/media';
 import { useDeployments } from '@horse-racing/react-hooks';
 import { useWallet } from '@horse-racing/react-wallet';
-import { CollectionData } from '@horse-racing/service/types';
+import { CollectionData, Erc721DetailData } from '@horse-racing/service/types';
 import { useApi } from '@horse-racing/service/useApi';
+import { Spin } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import Slider from 'react-slick';
+import styled from 'styled-components';
+import MyAvatar from './MyAvatar';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -62,14 +62,14 @@ const SelectWrapper = styled.div`
 
 const CellStyle = styled.div`
   ${marginMedia(2)}
-  display: flex;
-  align-items: center;
   margin: 0 auto;
-  flex-direction: row;
   > .bottom {
     ${paddingMedia(0.4, 0.4, 0.4, 0.4)};
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
     .bottom-title {
+      justify-content: flex-start;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -291,7 +291,11 @@ const SbtComment: React.FC<{ data: number }> = ({ data }) => {
   );
 };
 
-const Market: React.FC = () => {
+interface Props {
+  erc721: Erc721DetailData;
+}
+
+const Market: React.FC<Props> = ({ erc721 }) => {
   const api = useApi();
   const deployments = useDeployments();
   const [fetching, setFetching] = useState(false);
@@ -338,6 +342,7 @@ const Market: React.FC = () => {
             <div className="bottom-title">
               kkkkdenuabn <span className="art-num">oykqy...6qe</span>
             </div>
+            <MyAvatar />
           </div>
         </CellStyle>
 

@@ -22,6 +22,7 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const Wrapper = styled.div`
+  background: #000;
   width: 100%;
   min-height: 80vh;
   .ant-collapse {
@@ -30,7 +31,7 @@ const Wrapper = styled.div`
   .ant-collapse-header {
     font-weight: bold;
     :hover {
-      background-color: #f1f1f1;
+      background-color: #000;
     }
   }
 
@@ -44,7 +45,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
     flex-direction: row-reverse;
     :hover {
-      background-color: #f1f1f1;
+      background-color: #000;
     }
 
     ::after {
@@ -59,9 +60,8 @@ const Wrapper = styled.div`
     ${marginMedia(1.5)}
     text-align:right;
     .ant-pagination-item-active {
-      background: #000;
       a {
-        color: #fff;
+        color: #000;
       }
     }
     ${media('lg')} {
@@ -86,42 +86,36 @@ const Content = styled.div`
 
 const UserWrapper = styled.div`
   margin-top: -180px;
+  display: flex;
   z-index: 10;
-  ${media('lg')} {
-    ${marginMedia(0, 0, 0.5, 0.5)}
+  > img {
+    border-radius: 24px;
+    width: 128px;
+    height: 128px;
   }
-  .art-title {
-    color: #fff;
-    font-size: 42px;
-    ${media('lg')} {
-      font-size: 30px;
-    }
-  }
-
-  .art-num {
-    font-size: 26px;
-    color: #cacaca;
-    ${media('lg')} {
-      font-size: 16px;
-    }
-  }
-
-  .art-user {
-    display: inline-block;
-    ${marginMedia(0.3)}
-    ${paddingMedia(0.1, 0.1, 0.5, 1)}
-    background: rgba(255,255,255,0.25);
-    border-radius: 32px;
-
-    > img {
-      ${marginMedia(0, 0, 0, 0.3)}
-      width: 40px;
-      border-radius: 50%;
-    }
-
-    span {
-      font-size: 20px;
+  .user-art {
+    margin-left: 33px;
+    .art-title {
       color: #fff;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 32px;
+      line-height: 48px;
+      ${media('lg')} {
+        font-size: 28px;
+      }
+    }
+
+    .art-num {
+      color: #cacaca;
+      color: #d5ff40;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 100%;
+      ${media('lg')} {
+        font-size: 16px;
+      }
     }
   }
 `;
@@ -182,10 +176,7 @@ const NumWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
-  box-shadow: 0px 7px 18px 0px #a2959d;
-  border-radius: 10px;
-  width: 800px;
+  width: 50%;
   ${paddingMedia(0.5, 0.5, 0.5, 0.5)}
   ${media('lg')} {
     width: 95%;
@@ -196,7 +187,7 @@ const ItemWrapper = styled.div`
   flex: 1;
   font-size: 17px;
   font-weight: bold;
-  color: #272270;
+  color: #fff;
   text-align: center;
   :not(:last-of-type) {
     border-right: 1px dashed rgba(0, 0, 0, 0.1);
@@ -204,24 +195,41 @@ const ItemWrapper = styled.div`
 
   > label {
     display: block;
-    color: ${colorPrimary};
-    font-weight: normal;
+    color: #ffffff;
+    opacity: 0.6;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
     ${marginMedia(0.2)};
   }
 `;
 
 const Links = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: flex-end;
   ${paddingMedia(0, 0.2, 0.5, 0)}
-  > a {
-    margin-right: 20px;
-    :last-of-type(1) {
-      margin-right: 0;
+  .ant-btn {
+    ${paddingMedia(0.35, 0.35, 0.5, 0.5)}
+    width: 180px;
+    height: auto;
+    background: #2c2c2c;
+    border-radius: 1000px;
+    > span {
+      margin-left: 5px;
     }
-  }
-  ${media('lg')} {
-    float: left;
-    margin: -120px 0 0 120px;
+    ${marginMedia(0, 0, 0, 0.8)}
+    :not(:last-of-type) {
+      border-radius: 40px;
+      width: 180px;
+      background: #525252;
+      height: auto;
+      color: #d5ff40;
+      border-color: 1px solid #d5ff40;
+      > span {
+        margin-left: 5px;
+      }
+    }
   }
 `;
 
@@ -283,6 +291,25 @@ const MediaWrapper = styled.div`
     ${paddingMedia(1, 0, 0.5, 0.5)}
     font-size:14px;
     color: #272270;
+  }
+  .art-play {
+    ${paddingMedia(0.35, 0.35, 0.5, 0.5)}
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 60px;
+    gap: 10px;
+    width: 300px;
+    height: 68px;
+    background: #d5ff40;
+    color: #000;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+    border-radius: 1000px;
+    margin-bottom: 88px;
   }
 `;
 
@@ -386,7 +413,7 @@ const StyledDrawer = styled(Drawer)`
   }
   .btn {
     position: fixed;
-    background: #fff;
+    background: #000;
     bottom: 0;
     left: 0;
     right: 0;
@@ -465,32 +492,35 @@ const UserInfo: React.FC<childProps> = (props) => {
       </ImageWrapper>
       <MediaWrapper>
         <UserWrapper>
-          <div className="art-title">{info?.name}</div>
-          <div className="art-num">{info?.totalCount} Artworks</div>
-          {/* <div className="art-user">
-            <img src={info?.logo} />
-            <span>@{info?.owner?.substring(0, 6)}</span>
-          </div> */}
+          <img src={info?.logo} />
+          <div className="user-art">
+            <div className="art-title">{info?.name}</div>
+            <div className="art-num">{info?.totalCount} Artworks</div>
+          </div>
         </UserWrapper>
         <ArtNumWrapper>
           <NumWrapper>
-            <Item title="Volume">
+            <Item title="Downloads">
               <FormatNumber balance={info?.openseaStats?.total_volume} />
             </Item>
-            <Item title="Listings">{info?.stats.listing ? info?.stats.listing : '-'}</Item>
-            <Item title="Floor Price">
+            <Item title="Follow">{info?.stats.listing ? info?.stats.listing : '-'}</Item>
+            <Item title="Score">
               <FormatNumber balance={info?.openseaStats?.floor_price} />
             </Item>
+            <Item title="Popularity">{info?.stats.listing ? info?.stats.listing : '-'}</Item>
           </NumWrapper>
           <Links>
-            {mediaLinks.map(({ href, icon }, index) => (
-              <a href={href} key={index} rel="noopener noreferrer" target="_blank">
-                <img src={icon} />
-              </a>
-            ))}
+            <Button shape="round" onClick={close} type="primary">
+              <img src={require('@horse-racing/app-config/assets/heart.svg')} /> <span>Follow</span>
+            </Button>
+
+            <Button shape="round" onClick={close} type="primary">
+              <span>Followed</span>
+            </Button>
           </Links>
         </ArtNumWrapper>
-        <p className="art-info">{info?.description}</p>
+        <div className="art-play">Play</div>
+        {/* <p className="art-info">{info?.description}</p> */}
       </MediaWrapper>
     </>
   );
@@ -551,7 +581,7 @@ const Artworks: React.FC = () => {
   const [visible, setVisible] = useState(false);
 
   const panelStyle = {
-    background: '#fff',
+    background: '#000',
     border: 'none',
     borderRadius: '10px'
   };

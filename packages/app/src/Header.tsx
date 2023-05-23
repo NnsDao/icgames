@@ -16,7 +16,7 @@ const Wrapper = styled.div<ContainerProps>`
   width: 100%;
   padding: 15px;
   margin: 0 auto;
-  background: ${(props) => props.color};
+  background: #000;
   backdrop-filter: ${(props) => props.backdropFilter};
   z-index: 999;
 `;
