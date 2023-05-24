@@ -220,7 +220,6 @@ const CommentGamelist = styled.div`
     width: 450px;
     height: 252px;
     > p {
-      word-break: break-all;
       word-wrap: break-word;
       opacity: 0.8;
       line-height: 28px;

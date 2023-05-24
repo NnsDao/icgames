@@ -99,6 +99,16 @@ const Wrapper = styled.div`
       background: #d5ff40;
     }
   }
+  .rank-bg {
+    position: absolute;
+    width: 732px;
+    height: 732px;
+    left: 0px;
+    top: 560px;
+    background: #d5ff40;
+    opacity: 0.5;
+    filter: blur(400px);
+  }
 `;
 interface Props {
   data: CollectionData;
@@ -119,6 +129,7 @@ const Token: React.FC<Props> = ({ data }) => {
           <Button onClick={() => push('/explore')}>Explore</Button>
         </div>
       </div>
+      <div className="rank-bg"></div>
     </Wrapper>
   );
 };

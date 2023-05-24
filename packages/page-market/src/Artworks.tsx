@@ -1,15 +1,12 @@
-import { Button, Checkbox, Col, Collapse, Drawer, Pagination, Row, Select, Spin, Tag } from 'antd';
+import { formatImage } from '@horse-racing/app-config/utils';
+import { Button, Collapse, Divider, Drawer, Select, Spin } from 'antd';
 import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { formatImage } from '@horse-racing/app-config/utils';
 // import { Exchange } from '@nft-market/contracts-core';
 // import Order from '@nft-market/contracts-core/Order';
-import { FilterOutlined } from '@ant-design/icons';
-import { FormatBalance, FormatNumber, Grid } from '@horse-racing/react-components';
-import { colorPrimary } from '@horse-racing/react-components/style';
+import { FormatBalance, FormatNumber } from '@horse-racing/react-components';
 import media, {
   marginMedia,
   paddingMedia,
@@ -24,7 +21,7 @@ const { Option } = Select;
 const Wrapper = styled.div`
   background: #000;
   width: 100%;
-  min-height: 80vh;
+  min-height: 300vh;
   .ant-collapse {
     user-select: none;
   }
@@ -120,44 +117,138 @@ const UserWrapper = styled.div`
   }
 `;
 
-const FilterWrapper = styled.div`
-  ${widthMedia()};
-  ${marginMedia(1, 1)};
-  ${paddingMedia(0, 0, 0.5, 0.5)}
-  margin: 0 auto;
-  border-radius: 10px;
-  color: #c3c6cc;
+const CgStyle = styled.div`
   display: flex;
-  justify-content: space-between;
-  .select {
-    width: 200px;
-  }
+  margin: 0 auto;
+  align-items: center;
+  width: 100%;
 
-  .select .ant-select-selector {
-    border: 1px solid;
-    border-image: linear-gradient(270deg, rgba(87, 69, 222, 1), rgba(236, 100, 222, 1)) 1 1;
-    border-radius: 2px;
-    clip-path: inset(0 round 2px);
-  }
-  .ant-select-arrow {
-    color: ${colorPrimary};
+  > .cg-card {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-right: 24px;
+    > img {
+      width: 781px;
+      height: 440px;
+      border-radius: 32px;
+    }
   }
 `;
 
-const Filter = styled.div`
-  font-size: 16px;
-  border: 1px solid;
-  border-image: linear-gradient(270deg, rgba(87, 69, 222, 1), rgba(236, 100, 222, 1)) 1 1;
-  border-radius: 2px;
-  color: ${colorPrimary};
-  border-radius: 2px;
-  height: 32px;
-  width: 160px;
-  text-align: center;
-  div,
-  .anticon {
-    display: inline-block;
-    vertical-align: middle;
+const SliderStyle = styled.div`
+  ${widthMedia()};
+
+  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+
+  width: 100%;
+
+  > .grid {
+    margin-bottom: 40px;
+    ${media('lg')} {
+      ${paddingMedia(0, 0, 0.5, 0.5)}
+    }
+  }
+  > .slider-cg {
+    box-sizing: border-box;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 66px;
+    height: 66px;
+    line-height: 66px;
+    top: 1024px;
+    right: 240px;
+    border-radius: 1000px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transform: rotate(-90deg);
+    > img {
+      width: 60px;
+      height: 30px;
+      transform: rotate(90deg);
+    }
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const AboutGameStyle = styled.div`
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 85px;
+  margin-bottom: 100px;
+  > .about-title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 24px;
+    color: #ffffff;
+  }
+  > .about-content {
+    width: 781px;
+    height: 240px;
+    padding-top: 24px;
+    display: block;
+    .click-to-show {
+      z-index: 1000;
+      width: 90px;
+      display: flex;
+      height: 28px;
+      flex-direction: column;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 28px;
+      color: #d5ff40;
+      margin-bottom: 60px;
+    }
+    .click-to-less {
+      z-index: 1000;
+      width: 90px;
+      height: 28px;
+      display: flex;
+      font-family: 'Poppins';
+      margin-bottom: 60px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 28px;
+      color: #d5ff40;
+      margin-top: 30px;
+      padding-top: 100px;
+    }
+    > .moreContentHidden {
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      word-wrap: break-word;
+      word-break: break-all;
+      font-size: 16px;
+      height: 200px;
+      line-height: 28px;
+      color: #ffffff;
+      opacity: 0.8;
+      overflow: hidden;
+    }
+    > .moreContent {
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      word-wrap: break-word;
+      word-break: break-all;
+      font-size: 16px;
+      line-height: 28px;
+      height: 300px;
+      color: #ffffff;
+      opacity: 0.8;
+    }
   }
 `;
 
@@ -180,6 +271,105 @@ const NumWrapper = styled.div`
   ${paddingMedia(0.5, 0.5, 0.5, 0.5)}
   ${media('lg')} {
     width: 95%;
+  }
+`;
+
+const CateWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  ${marginMedia(0.8)}
+  ${media('lg')} {
+    ${marginMedia(0, 0, 0.5, 0.5)}
+    display:inline-block;
+    width: 100%;
+  }
+`;
+
+const UpWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 780px;
+  ${paddingMedia(0.5, 0.5, 0.5, 0.5)}
+  ${media('xxl')} {
+    width: 560px;
+    margin-left: 30px;
+  }
+`;
+
+const GameTypeStyle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  ${paddingMedia(0.5, 0.5, 0.5, 0.5)}
+  .button-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    > .bottom-button {
+      width: 145px;
+      height: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #232323;
+      border-radius: 1000px;
+      margin-left: 20px;
+      > .role-button {
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 60px;
+        color: #fff;
+      }
+    }
+  }
+`;
+
+const GameVersionStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  ${paddingMedia(0.5, 0.5, 0.5, 0.5)}
+  ${media('xxl')} {
+    margin-left: 30px;
+  }
+  .divider {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .version-title {
+    display: flex;
+    flex-direction: flex-start;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 24px;
+    color: #ffffff;
+  }
+  .version-desc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+    .version-desc-content {
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 28px;
+      color: #ffffff;
+      opacity: 0.8;
+    }
+    .version-desc-date {
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 28px;
+      color: #ffffff;
+      opacity: 0.6;
+    }
   }
 `;
 
@@ -320,7 +510,7 @@ const ImageWrapper = styled.div`
   img {
     width: 100%;
     object-fit: cover;
-    height: 450px;
+    height: 592px;
   }
 `;
 
@@ -451,6 +641,27 @@ interface childProps {
   setAddr: Function;
 }
 
+const gameList = [
+  {
+    name: 'Role Playing'
+  },
+  {
+    name: 'Turn-based RPG'
+  },
+  {
+    name: 'Casual'
+  },
+  {
+    name: 'Single player'
+  },
+  {
+    name: 'Stylized'
+  },
+  {
+    name: 'Anime'
+  }
+];
+
 const UserInfo: React.FC<childProps> = (props) => {
   const { id } = props;
   const [fetching, setFetching] = useState(false);
@@ -563,6 +774,17 @@ const Cell: React.FC<{ order: Erc721DetailData }> = ({ order }) => {
   );
 };
 
+// todo data  cg list
+const CgGame: React.FC<{}> = ({}) => {
+  return (
+    <CgStyle>
+      <div className="cg-card">
+        <img src={require('@horse-racing/app-config/assets/cg-2.png')} />
+      </div>
+    </CgStyle>
+  );
+};
+
 const Artworks: React.FC = () => {
   const {
     params: { id }
@@ -579,6 +801,8 @@ const Artworks: React.FC = () => {
   const [pageSize, setPageSize] = useState(20);
   const [total, setTotal] = useState(0);
   const [visible, setVisible] = useState(false);
+
+  const [contentStatus, setGetmore] = useState(false);
 
   const panelStyle = {
     background: '#000',
@@ -675,6 +899,10 @@ const Artworks: React.FC = () => {
     setVisible(true);
   }, []);
 
+  const getmore = useCallback(() => setGetmore(true), []);
+
+  const packup = useCallback(() => setGetmore(false), []);
+
   const toClear = () => {
     setSelectList([]);
     setVisible(false);
@@ -684,80 +912,91 @@ const Artworks: React.FC = () => {
     <Wrapper>
       <UserInfo id={id} setAddr={getAddr}></UserInfo>
       <Content>
-        <FilterWrapper>
-          <Select
-            className="select"
-            onChange={(value) => {
-              setSort(value);
-            }}
-            placeholder="Sort"
-            style={{ width: 160 }}
-            value={sort}
-          >
-            {Object.keys(sortOptions).map((key) => (
-              <Option key={key} value={key}>
-                {sortOptions[key]}
-              </Option>
-            ))}
-          </Select>
-          <Filter onClick={open}>
-            <FilterOutlined />
-            <div>Filters</div>
-          </Filter>
-        </FilterWrapper>
-        <FitWrapper>
-          <Row gutter={16}>
-            <Col span={6}>
-              {Object.keys(attrData).map((key, index) => (
-                <Collapse accordion expandIconPosition="end" ghost key={index}>
-                  <Panel header={key} key={key} style={panelStyle}>
-                    <Checkbox.Group
-                      onChange={onSelect}
-                      options={attrData[key]}
-                      value={selectList}
-                    />
-                  </Panel>
-                </Collapse>
-              ))}
-            </Col>
-            <Col span={18}>
-              <SelectWrapper>
-                <div>
-                  {selectList.map((item, index) => (
-                    <Tag closable key={item + index} onClose={() => onClearSelect(item)}>
-                      {item}
-                    </Tag>
-                  ))}
+        <SliderStyle>
+          <CgGame />
+          <CgGame />
+          <CgGame />
+          <div className="slider-cg">
+            <img src={require('@horse-racing/app-config/assets/right.svg')} />
+          </div>
+        </SliderStyle>
+
+        <AboutGameStyle>
+          <div className="about-title">About this game</div>
+          <div className="about-content">
+            <p className={contentStatus ? 'moreContent' : 'moreContentHidden'}>
+              HoYoverse's Honkai: Star Rail is available now! Climb aboard to the stars! □ 10M
+              Pre-Registrations Get! Download to get up to 80 warps! They call them, "Aeons" in this
+              galaxy. They construct reality, erase stars, and leave their marks on countless
+              worlds. Together with your companions you'll travel across the galaxy on the Astral
+              Express, following the path once traveled by the Aeons. From here, you will explore
+              new civilizations, meet new comrades, and begin new adventures among countless
+              fantastical worlds. All the answers you seek will be uncovered among the stars. Well
+              what're you waiting for? Are you ready to begin this trailblazing journey? Honkai:
+              Star Rail is a new HoYoverse space fantasy RPG. Hop aboard the Astral Express and
+              experience the galaxy's infinite wonders filled with adventure and thrills. Players
+              will meet new companions across various worlds and maybe even run into some familiar
+              faces. Overcome the struggles together caused by Stellaron and unravel the hidden
+              truths behind it! May this journey uture with laughter and tears. □ Reimagining
+              Tactical Combat — Exploit weaknesses, battle to your heart's desire Get ready for
+              exciting battles with a satisfying rhythm! Use a brand-new command combat system that
+              enables simple yet strategic controls, employ Techniques and suppress enemies with
+              different Types' Weakness Breaks, then finish the fight with style via a stunning
+              Ultimate. In the randomly-generated mazes of the Simulated Universe, surprising random
+              events and nearly 100 different Blessings and Curios will grant you an incredible
+              boost in abilities, allowing you to challenge a more unpredictable combat environment.
+            </p>
+            {contentStatus == false && (
+              <div className="click-to-show" onClick={getmore}>
+                <span>show more</span>
+              </div>
+            )}
+            {contentStatus == true && (
+              <div className="click-to-less" onClick={packup}>
+                <span>show less</span>
+              </div>
+            )}
+          </div>
+        </AboutGameStyle>
+
+        <CateWrapper>
+          <UpWrapper>
+            <Item title="Category">Adventure</Item>
+            <Item title="Version">V0.1.3</Item>
+            <Item title="Uptime">April 28, 2023</Item>
+            <Item title="Size">950M</Item>
+            <Item title="Languages">Chinese, English</Item>
+          </UpWrapper>
+        </CateWrapper>
+
+        <GameTypeStyle>
+          <div className="button-wrap">
+            {gameList.map((item, index) => (
+              <div className="bottom-button">
+                <div className="role-button" key={index}>
+                  {item.name}
                 </div>
-                <div>{selectList.length > 0 ? <Tag onClick={clearAll}>Clear All</Tag> : ''}</div>
-              </SelectWrapper>
-              <Grid className="grid" spans={[5, 4, 4, 3, 2, 2]}>
-                {data.map((order, index) => (
-                  <Cell key={index} order={order} />
-                ))}
-              </Grid>
-            </Col>
-          </Row>
-        </FitWrapper>
-        <MbWrapper>
-          <Grid className="grid" spans={[5, 4, 4, 3, 2, 2]}>
-            {data.map((order, index) => (
-              <Cell key={index} order={order} />
+              </div>
             ))}
-          </Grid>
-        </MbWrapper>
+          </div>
+        </GameTypeStyle>
+
+        <GameVersionStyle>
+          <Divider className="divider" />
+          <div className="version-title">What’s New</div>
+          <div className="version-desc">
+            <div className="version-desc-content">
+              Honkai: Star Rail is launching on April 26, 10:00 (UTC+8)!
+            </div>
+            <div className="version-desc-date">Apr 6, 2023, Version 1.0.5</div>
+          </div>
+          <Divider className="divider" />
+        </GameVersionStyle>
+
         <Spin spinning={fetching} style={{ width: '100%' }} />
-        <Pagination
-          current={current}
-          onChange={(current, pageSize) => {
-            setCurrent(current);
-            setPageSize(pageSize);
-          }}
-          pageSize={pageSize}
-          total={total}
-        />
       </Content>
-      <StyledDrawer
+
+      {/* <StyledDrawer
         title="Filter"
         placement="bottom"
         onClose={() => setVisible(false)}
@@ -777,7 +1016,7 @@ const Artworks: React.FC = () => {
             Done
           </Button>
         </div>
-      </StyledDrawer>
+      </StyledDrawer> */}
     </Wrapper>
   );
 };
