@@ -1,9 +1,10 @@
 import { formatImage } from '@horse-racing/app-config/utils';
-import { Button, Collapse, Divider, Drawer, Select, Spin } from 'antd';
+import { Button, Collapse, Divider, Drawer, Form, Input, Select, Spin } from 'antd';
 import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
+const { TextArea } = Input;
 // import { Exchange } from '@nft-market/contracts-core';
 // import Order from '@nft-market/contracts-core/Order';
 import { FormatBalance, FormatNumber } from '@horse-racing/react-components';
@@ -373,6 +374,190 @@ const GameVersionStyle = styled.div`
   }
 `;
 
+const GameRateStyle = styled.div`
+  margin: 0 auto;
+  ${paddingMedia(0.5, 0.5, 0.5, 0.5)}
+  ${media('xxl')} {
+    margin-left: 30px;
+  }
+  .rate-content {
+    display: flex;
+    flex-direction: column;
+    > .rate-title {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 24px;
+      color: #ffffff;
+    }
+    > .rate-score {
+      padding-top: 24px;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 60px;
+      line-height: 60px;
+      color: #d5ff40;
+      padding-bottom: 8px;
+    }
+    > .rate-total {
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #ffffff;
+      opacity: 0.6;
+    }
+  }
+`;
+
+const CommentGamelist = styled.div`
+  ${widthMedia()};
+  margin: 0 auto;
+  display: flex;
+  margin-top: 60px;
+  flex-direction: row;
+  > .comment-box {
+    > .comment-avator {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      > img {
+        width: 44px;
+        height: 44px;
+      }
+      > span {
+        margin-left: 24px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 100%;
+        color: #ffffff;
+      }
+    }
+  }
+
+  > .comment-wrapcontent {
+    padding-left: 200px;
+    > .comment-star {
+      display: flex;
+      align-item: center;
+      > img {
+        width: 32px;
+        height: 30.43px;
+      }
+    }
+    > .comment-date {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 24px;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #ffffff;
+      opacity: 0.5;
+    }
+    > .comment-content {
+      width: 450px;
+      height: 252px;
+      > p {
+        word-wrap: break-word;
+        opacity: 0.8;
+        line-height: 28px;
+        color: #ffffff;
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        word-break: break-all;
+        font-size: 16px;
+      }
+    }
+  }
+`;
+
+const PublishGamelist = styled.div`
+  ${widthMedia()};
+  margin: 0 auto;
+  display: flex;
+  margin-top: 60px;
+  flex-direction: row;
+  > .rate-comment-box {
+    > .rate-comment-avator {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      > img {
+        width: 44px;
+        height: 44px;
+      }
+      > span {
+        margin-left: 24px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 100%;
+        color: #ffffff;
+      }
+    }
+  }
+
+  > .rate-comment-wrapcontent {
+    padding-left: 120px;
+    > .rate-comment-star {
+      display: flex;
+      align-item: center;
+      flex-direction: row;
+      text-align: center;
+      margin-bottom: 10px;
+      > span {
+        margin-right: 15px;
+      }
+      > img {
+        width: 32px;
+        height: 30.43px;
+      }
+    }
+
+    > .rate-comment-content {
+      width: 450px;
+      height: 252px;
+      .ant-input {
+        height: 223px;
+        font-size: 20px;
+        padding: 24px 32px;
+        ${paddingMedia(0, 0, 0.5, 0.5)};
+        background: #171717;
+        /* Palette/True Gray/600 */
+        color: #fff;
+        border: 1px solid #525252;
+        border-radius: 16px;
+        opacity: 0.8;
+        border-radius: 40px;
+        border-right: 0;
+        ::placeholder {
+          color: #fff;
+          font-size: 14px;
+        }
+      }
+    }
+    > .rate-submit-button {
+      .ant-btn {
+        ${paddingMedia(0.35, 0.35, 0.5, 0.5)}
+        border-radius: 40px;
+        width: 180px;
+        background: #000;
+        height: auto;
+        color: #d5ff40;
+        border: 1px solid #d5ff40;
+      }
+    }
+  }
+`;
+
 const ItemWrapper = styled.div`
   flex: 1;
   font-size: 17px;
@@ -403,8 +588,8 @@ const Links = styled.div`
     ${paddingMedia(0.35, 0.35, 0.5, 0.5)}
     width: 180px;
     height: auto;
-    background: #2c2c2c;
     border-radius: 1000px;
+    border: 1px solid #d5ff40;
     > span {
       margin-left: 5px;
     }
@@ -412,10 +597,9 @@ const Links = styled.div`
     :not(:last-of-type) {
       border-radius: 40px;
       width: 180px;
-      background: #525252;
       height: auto;
       color: #d5ff40;
-      border-color: 1px solid #d5ff40;
+      border: 1px solid #d5ff40;
       > span {
         margin-left: 5px;
       }
@@ -785,6 +969,73 @@ const CgGame: React.FC<{}> = ({}) => {
   );
 };
 
+const RateComment: React.FC<{ data: number }> = ({ data }) => {
+  return (
+    <CommentGamelist>
+      <div className="comment-box">
+        <div className="comment-avator">
+          <img src={require('@horse-racing/app-config/assets/dfinity.svg')} />
+          <span>z.Dom</span>
+        </div>
+      </div>
+      <div className="comment-wrapcontent">
+        <div className="comment-star">
+          <img src={require('@horse-racing/app-config/assets/star-light.svg')} />
+          <img src={require('@horse-racing/app-config/assets/star-light.svg')} />
+          <img src={require('@horse-racing/app-config/assets/star-light.svg')} />
+          <img src={require('@horse-racing/app-config/assets/star-dark.svg')} />
+        </div>
+        <div className="comment-date">April 26, 2023</div>
+        <div className="comment-content">
+          <p>
+            The game has excellent visualization and funny storytelling but some flaws. First, the
+            turn base combat system with a complete virtual gamepad causes unnecessary and
+            complicated player control. Mobile games control should be as simple as possible.
+            Second, the story cannot skip or faster. There is a lag on each line that stops you from
+            clicking the dialog. Very annoying. Some people may like the story, but others just want
+            to skip it. Give the player a choice, please.
+          </p>
+        </div>
+      </div>
+    </CommentGamelist>
+  );
+};
+
+const PublishComment: React.FC<{ data: number }> = ({ data }) => {
+  return (
+    <PublishGamelist>
+      <div className="rate-comment-box">
+        <div className="rate-comment-avator">
+          <img src={require('@horse-racing/app-config/assets/dfinity.svg')} />
+          <span>z.Gameplayer</span>
+        </div>
+      </div>
+      <div className="rate-comment-wrapcontent">
+        <div className="rate-comment-star">
+          <span>Rate Score:</span>
+          <img src={require('@horse-racing/app-config/assets/star-light.svg')} />
+          <img src={require('@horse-racing/app-config/assets/star-light.svg')} />
+          <img src={require('@horse-racing/app-config/assets/star-light.svg')} />
+          <img src={require('@horse-racing/app-config/assets/star-dark.svg')} />
+        </div>
+        <div className="rate-comment-content">
+          <Form.Item>
+            <TextArea
+              placeholder="Would you recommend other ICgame to play this game? What can you tell people from your experience with the game? Reviews that are 150 words long, clearly expressed, and easy to read have a chance to gain more exposure~"
+              rows={6}
+            />
+          </Form.Item>
+        </div>
+        <div className="rate-submit-button">
+          <Button shape="round" onClick={close} type="primary">
+            <span>Publish & Review</span>
+          </Button>
+        </div>
+      </div>
+    </PublishGamelist>
+  );
+};
+
 const Artworks: React.FC = () => {
   const {
     params: { id }
@@ -992,6 +1243,17 @@ const Artworks: React.FC = () => {
           </div>
           <Divider className="divider" />
         </GameVersionStyle>
+
+        <GameRateStyle>
+          <div className="rate-content">
+            <div className="rate-title">Ratings and reviews</div>
+            <div className="rate-score">4.8</div>
+            <div className="rate-total">A total of 3.5k evaluations</div>
+          </div>
+          <RateComment data={1} />
+          <RateComment data={1} />
+          <PublishComment data={1} />
+        </GameRateStyle>
 
         <Spin spinning={fetching} style={{ width: '100%' }} />
       </Content>

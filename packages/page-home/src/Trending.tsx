@@ -1,4 +1,3 @@
-import { Grid } from '@horse-racing/react-components';
 import media, {
   marginMedia,
   paddingMedia,
@@ -7,6 +6,7 @@ import media, {
 import { CollectionData } from '@horse-racing/service/types';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Slider from 'react-slick';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -32,8 +32,20 @@ const Wrapper = styled.div`
       -webkit-text-fill-color: transparent;
     }
   }
+  .custom-slider {
+    img {
+      background: #000;
+    }
+    &:hover {
+      cursor: pointer;
+      background-image: url('/assets/slider.svg');
+      background-repeat: no-repeat;
+    }
+  }
   .grid {
-    ${marginMedia(0, 0, 0.5, 0.5)}
+    ${media('lg')} {
+      ${paddingMedia(0, 0, 0.5, 0.5)}
+    }
   }
 `;
 
@@ -79,19 +91,104 @@ const CellStyle = styled.div`
   }
 `;
 
+const SbtStyle = styled.div`
+  display: flex;
+  width: 459px;
+  height: 344px;
+  margin-bottom: 60px;
+  > .sbt-content {
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.06);
+    }
+    > .sbt-card {
+      display: flex;
+      align-items: center;
+      width: 429px;
+      height: 344px;
+      position: relative;
+      > img {
+        width: 429px;
+        height: 344px;
+        border-radius: 30px;
+      }
+      > .sbt-author {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        position: absolute;
+        bottom: 20px;
+        margin: 0 47px;
+        width: 365px;
+        height: 96px;
+        background: rgba(245, 245, 245, 0.5);
+        backdrop-filter: blur(40px);
+        border-radius: 10000px;
+        > img {
+          width: 56px;
+          height: 56px;
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          border-radius: 1000px;
+        }
+        > .sbt-company {
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 600;
+          margin-left: 16px;
+          font-size: 18px;
+          line-height: 18px;
+          text-transform: uppercase;
+          color: #000000;
+        }
+      }
+    }
+  }
+`;
+
+const SliderStyle = styled.div`
+  ${widthMedia()};
+  margin: 0 auto;
+  z-index: 9999;
+  > .grid {
+    margin-bottom: 40px;
+    ${media('lg')} {
+      ${paddingMedia(0, 0, 0.5, 0.5)}
+    }
+  }
+`;
+
+const settings = {
+  className: 'center',
+  centerMode: true,
+  infinite: true,
+  centerPadding: '60px',
+  dots: true,
+  slidesToShow: 3,
+  speed: 500,
+  rows: 2,
+  //@ts-ignore
+  customPaging: (i) => (
+    <div className="custom-slider">
+      <img datatype={i} src={require('@horse-racing/app-config/assets/slider-gray.svg')} />
+    </div>
+  )
+};
+
 const Cell: React.FC<{ item: CollectionData }> = ({ item }) => {
   const { push } = useHistory();
 
   return (
-    <CellStyle onClick={() => push(`/explore/artworks/${item.id}`)}>
-      <div className="banner">
-        <img src={item.banner} />
+    <SbtStyle onClick={() => push(`/myCollection/1`)}>
+      <div className="sbt-content">
+        <div className="sbt-card">
+          <img src={item.banner} />
+          <div className="sbt-author">
+            <img src={item.logo} />
+            <div className="sbt-company">{item.name}</div>
+          </div>
+        </div>
       </div>
-      <div className="user-info">
-        <img src={item.logo} />
-        <span>{item.name}</span>
-      </div>
-    </CellStyle>
+    </SbtStyle>
   );
 };
 
@@ -102,11 +199,13 @@ const Token: React.FC<Props> = ({ data }) => {
   return (
     <Wrapper>
       <div className="title">Popular Games</div>
-      <Grid className="grid" spans={[3, 3, 3, 2, 2, 1]}>
-        {data.slice(0, 6).map((item, index) => (
-          <Cell item={item} key={index} />
-        ))}
-      </Grid>
+      <SliderStyle>
+        <Slider {...settings}>
+          {data.slice(0, 16).map((item, index) => (
+            <Cell item={item} key={index} />
+          ))}
+        </Slider>
+      </SliderStyle>
     </Wrapper>
   );
 };

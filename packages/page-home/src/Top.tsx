@@ -16,14 +16,12 @@ const Wrapper = styled.div`
   margin: 0 auto;
   text-align: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: row-reverse;
   ${media('lg')} {
     display: block;
   }
   img {
-    flex: 2;
     width: 535px;
     box-sizing: border-box;
     ${marginMedia(0, 0, 0.5, 1.6)}
@@ -38,18 +36,40 @@ const Wrapper = styled.div`
     }
   }
   .slogan {
-    flex: 3;
-    h1 {
-      font-size: 32px;
-      text-align: center;
+    display: flex;
+    flex-direction: column;
+    .slogan-title {
+      display: flex;
+      margin-left: 30px;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 48px;
+      line-height: 72px;
+
       ${media('lg')} {
         font-size: 20px;
         line-height: 28px;
         ${marginMedia(1)}
       }
+      > span {
+        color: #d5ff40;
+      }
+    }
+    .slogan-title-two {
+      display: flex;
+      margin-left: 30px;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 48px;
+      line-height: 72px;
+      > span {
+        color: #d5ff40;
+      }
     }
     p {
-      margin-left: 58px;
+      margin-left: 30px;
       font-size: 18px;
       text-align: left;
       ${media('lg')} {
@@ -63,7 +83,7 @@ const Wrapper = styled.div`
   }
 
   .btn {
-    margin-left: 58px;
+    margin-left: 30px;
     ${marginMedia(2.2)}
     text-align:left;
     ${media('lg')} {
@@ -110,18 +130,90 @@ const Wrapper = styled.div`
     filter: blur(400px);
   }
 `;
+
+const SbtStyle = styled.div`
+  ${paddingMedia(2)}
+  display: flex;
+  > .sbt-content {
+    > .sbt-card {
+      display: flex;
+      align-items: center;
+      position: relative;
+      > img {
+        width: 535px;
+        height: 535px;
+        border-radius: 32px;
+      }
+      > .sbt-author {
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        position: absolute;
+        bottom: 20px;
+        margin: 0 40px;
+        width: 495px;
+        height: 96px;
+        background: rgba(245, 245, 245, 0.5);
+        backdrop-filter: blur(40px);
+        border-radius: 10000px;
+        > img {
+          width: 56px;
+          height: 56px;
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          border-radius: 1000px;
+        }
+        > .sbt-company {
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 600;
+          margin-left: 16px;
+          font-size: 18px;
+          line-height: 18px;
+          text-transform: uppercase;
+          color: #000000;
+        }
+      }
+    }
+  }
+`;
+
 interface Props {
   data: CollectionData;
 }
+
+const SbtGame: React.FC<{}> = ({}) => {
+  const { push } = useHistory();
+
+  return (
+    <SbtStyle onClick={() => push(`/myCollection/1`)}>
+      <div className="sbt-content">
+        <div className="sbt-card">
+          <img src={require('@horse-racing/app-config/assets/sbt-bg.png')} />
+          <div className="sbt-author">
+            <img src={require('@horse-racing/app-config/assets/dfinity.svg')} />
+            <div className="sbt-company">Starfish Club</div>
+          </div>
+        </div>
+      </div>
+    </SbtStyle>
+  );
+};
+
 const Token: React.FC<Props> = ({ data }) => {
   const { push } = useHistory();
   console.log(data);
   return (
     <Wrapper>
-      <img onClick={() => push(`/explore/artworks/${data?.id}`)} src={data?.logo} />
+      {/* <img onClick={() => push(`/explore/artworks/${data?.id}`)} src={data?.logo} /> */}
+
       <div className="slogan">
-        <h1>Game on, Get Rewarded, Join the Revolution!</h1>
-        <p>discover Your favorite web3 Game on icgames.</p>
+        <div className="slogan-title">
+          <span>Game &nbsp; </span> on, Get Rewarded,
+        </div>
+        <div className="slogan-title-two">
+          Join the <span> &nbsp;Revolution</span>!
+        </div>
+        <p>Discover Your favorite web3 Game on icgames.</p>
         <div className="btn">
           <Button onClick={() => push('/rank')} type="primary">
             Ranking
@@ -129,6 +221,7 @@ const Token: React.FC<Props> = ({ data }) => {
           <Button onClick={() => push('/explore')}>Explore</Button>
         </div>
       </div>
+      <SbtGame />
       <div className="rank-bg"></div>
     </Wrapper>
   );

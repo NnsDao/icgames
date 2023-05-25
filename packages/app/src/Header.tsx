@@ -15,7 +15,6 @@ const Wrapper = styled.div<ContainerProps>`
   left: 0;
   height: 96px;
   width: 100%;
-  padding: 0 24px;
   margin: 0 auto;
   background: #000;
   backdrop-filter: ${(props) => props.backdropFilter};
@@ -26,6 +25,8 @@ const Content = styled.div`
   ${widthMedia()}
   margin: 0 auto;
   display: flex;
+  padding: 33px 24px;
+
   align-items: center;
   justify-content: space-between;
   .mb-menu {
@@ -44,7 +45,6 @@ const Content = styled.div`
 const Nav = styled.nav`
   display: flex;
   align-items: center;
-
   ${media('lg')} {
     display: none;
   }
@@ -67,11 +67,9 @@ const Nav = styled.nav`
 const LogoWrapper = styled.div`
   color: ${(props) => props.color};
   width: 146px;
-  padding-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30px;
   img {
     width: 140px;
     height: auto;
@@ -152,7 +150,7 @@ const HeaderLink: React.FC<{ link: LinkType }> = ({ link: { children, open, titl
           ))}
         </Menu>
       }
-      trigger={['click']}
+      trigger={['hover']}
     >
       <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
         {title} <DownOutlined />
@@ -256,7 +254,7 @@ const Header: React.FC = () => {
   }, []);
 
   const handleClick = (val: string) => {
-    console.log(val, 2929296666);
+    console.log(val, 'debug nav');
 
     setBackdropFilter(val);
   };
@@ -276,6 +274,7 @@ const Header: React.FC = () => {
           ))}
           <HeaderWallet onFilterChange={handleClick} />
         </Nav>
+
         <div className="mb-menu">
           <HeaderWallet onFilterChange={handleClick} />
           <span onClick={open}>

@@ -34,6 +34,17 @@ const Wrapper = styled.div`
       -webkit-text-fill-color: transparent;
     }
   }
+  .game-bg {
+    position: absolute;
+    width: 732px;
+    height: 732px;
+    right: 0px;
+    z-index: -22;
+    top: 1279px;
+    background: #d5ff40;
+    opacity: 0.4;
+    filter: blur(400px);
+  }
   .btn {
     text-align: center;
     ${marginMedia(1.5, 1.5)}
@@ -240,6 +251,7 @@ const TopCollection: React.FC<Props> = ({ data, onSelectChange }) => {
           </a>
         </Dropdown>
       </div>
+      <div className="game-bg"></div>
       <Grid className="grid" spans={[3, 3, 3, 2, 2, 1]}>
         {data.slice(0, 12).map((item, index) => (
           <Cell item={item} key={index} rank={index} sortkey={sortkey} />

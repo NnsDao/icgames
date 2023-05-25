@@ -42,7 +42,7 @@ const Content = styled.div`
   display: flex;
   flex: 1;
   .dialog-styles {
-    height: 400px;
+    height: 900px;
     margint-top: 50%;
   }
 `;

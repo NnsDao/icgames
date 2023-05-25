@@ -53,12 +53,9 @@ const Subscribe = styled.div`
     }
   }
   .ant-input-group-addon {
-    z-index: 9999;
     border: 1px solid #d5ff40;
     width: 50px;
-    position: absolute;
-    right: 1%;
-    margin-right: -10px;
+    right: 6%;
     height: 50px;
     border-radius: 25px;
     background-color: transparent;
@@ -76,7 +73,8 @@ const Subscribe = styled.div`
     }
   }
   .ant-input {
-    height: 50px;
+    height: 52px;
+    z-index: 9999;
     font-size: 20px;
     ${paddingMedia(0, 0, 0.5, 0.5)};
     background-color: transparent;
