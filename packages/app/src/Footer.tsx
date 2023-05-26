@@ -257,7 +257,7 @@ const Footer: React.FC = () => {
               <img src="/images/icgame-logo.svg" />
             </div>
             <div className="intro">Discover Your favorite web3 Game on ICgames.</div>
-            <div className="copyright">© 2023 ICgames</div>
+            <div className="copyright">Dfinity Games © 2023 </div>
           </div>
           <Links>
             {mediaLinks.map(({ icon, open, to }, index) => (

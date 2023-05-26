@@ -25,8 +25,7 @@ const Content = styled.div`
   ${widthMedia()}
   margin: 0 auto;
   display: flex;
-  padding: 33px 24px;
-
+  min-height: 96px;
   align-items: center;
   justify-content: space-between;
   .mb-menu {

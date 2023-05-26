@@ -1,9 +1,3 @@
-import { Input, Select, Spin } from 'antd';
-import _ from 'lodash';
-import React, { useEffect, useMemo, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-
 import { FormatNumber, Grid } from '@horse-racing/react-components';
 import { colorPrimary } from '@horse-racing/react-components/style';
 import media, {
@@ -14,6 +8,12 @@ import media, {
 import { useDeployments } from '@horse-racing/react-hooks';
 import { CollectionData } from '@horse-racing/service/types';
 import { useApi } from '@horse-racing/service/useApi';
+import { Input, Select, Spin } from 'antd';
+import _ from 'lodash';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+const { Search } = Input;
 
 const { Option } = Select;
 
@@ -37,7 +37,7 @@ const Content = styled.div`
 const CellStyle = styled.div`
   position: relative;
   margin: 0 auto;
-  border-radius: 8px;
+  border-radius: 20px;
   border: 1px solid #f5f5f5;
   overflow: hidden;
   &:hover {
@@ -111,13 +111,16 @@ const ItemWrapper = styled.div`
 
 const SelectWrapper = styled.div`
   ${paddingMedia(3.5)}
-  text-align:center;
+  text-align:left;
   h1 {
     letter-spacing: 1px;
     color: #fff;
-    font-size: 38px;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 48px;
     ${media('lg')} {
-      font-size: 20px;
+      font-size: 30px;
       margin-bottom: 0;
     }
   }
@@ -128,13 +131,14 @@ const SelectWrapper = styled.div`
 
 const FilterWrapper = styled.div`
   ${widthMedia()};
-  ${paddingMedia(0.1, 0.5, 0.5, 0.5)}
+  ${paddingMedia(0.1, 1.5)}
   ${marginMedia(2, 1)};
   border-radius: 10px;
   color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
 
   .select-input {
     width: 45%;
@@ -154,26 +158,36 @@ const FilterWrapper = styled.div`
     }
     ${paddingMedia(0.3, 0.3, 0.5, 0.5)}
     background-color: transparent;
-    border: 1px solid;
-    border-image: linear-gradient(270deg, rgba(87, 69, 222, 1), rgba(213, 255, 64, 1)) 1 1;
-    border-radius: 2px;
+    border: 1px solid #232323;
+    border-image: #232323;
+    border-radius: 10px;
     clip-path: inset(0 round 2px);
     color: #fff;
   }
 
   .select {
-    width: 200px;
+    width: 180px;
     margin-top: 10px;
+    color: #fff;
   }
 
   .select .ant-select-selector {
-    border: 1px solid;
-    border-image: linear-gradient(270deg, rgba(87, 69, 222, 1), rgba(236, 100, 222, 1)) 1 1;
-    border-radius: 2px;
+    border: 1px solid #232323;
+    border-radius: 20px;
+    background: #000;
     clip-path: inset(0 round 2px);
   }
   .ant-select-arrow {
     color: ${colorPrimary};
+  }
+  .ant-select-selection-placeholder {
+    color: ${colorPrimary};
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    text-transform: capitalize;
   }
 `;
 
@@ -300,6 +314,7 @@ const Market: React.FC = () => {
               value={collectName}
             />
           </div>
+
           <Select
             className="select"
             onChange={(value) => {

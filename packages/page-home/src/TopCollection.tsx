@@ -40,7 +40,7 @@ const Wrapper = styled.div`
     height: 732px;
     right: 0px;
     z-index: -22;
-    top: 1279px;
+    top: 1679px;
     background: #d5ff40;
     opacity: 0.4;
     filter: blur(400px);
@@ -253,7 +253,7 @@ const TopCollection: React.FC<Props> = ({ data, onSelectChange }) => {
       </div>
       <div className="game-bg"></div>
       <Grid className="grid" spans={[3, 3, 3, 2, 2, 1]}>
-        {data.slice(0, 12).map((item, index) => (
+        {data.slice(0, 15).map((item, index) => (
           <Cell item={item} key={index} rank={index} sortkey={sortkey} />
         ))}
       </Grid>
