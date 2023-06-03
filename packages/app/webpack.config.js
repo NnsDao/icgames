@@ -14,5 +14,10 @@ module.exports = merge(baseConfig(context), {
       inject: true,
       template: path.join(context, 'src/index.html')
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      'magic-sdk': path.resolve(__dirname, 'node_modules/magic-sdk/dist/cjs/index.js')
+    }
+  }
 });

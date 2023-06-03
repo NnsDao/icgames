@@ -1,6 +1,12 @@
 import '@connect2ic/core/style.css';
-import { ConnectButton, ConnectDialog, useClient, useConnect, useWallet } from '@connect2ic/react';
+import { ConnectDialog, useClient, useConnect, useWallet } from '@connect2ic/react';
 import { shortPrincipal } from '@horse-racing/app-config/utils';
+import ConnectButton from './components/ConnectButton';
+import DisconnectButton from './components/DisconnectButton';
+import WalletDetail from './components/WalletDetail';
+
+import { useUser } from './context/UserContext';
+
 import { colorPrimary } from '@horse-racing/react-components/style';
 import { marginMedia, paddingMedia } from '@horse-racing/react-components/style/media';
 import { Dropdown, Menu, message } from 'antd';
@@ -150,12 +156,20 @@ const HeaderWallet: React.FC<HeaderWalletProps> = ({ onFilterChange }) => {
   const [accountID, setAccount] = useState('');
   // const [newActor, setNewActor] = useState<ActorSubclass<exampleService>>()
 
+  // magic
+  const { user } = useUser();
+  console.log(user, 393920202020202);
+
   useEffect(() => {
     if (isConnected) {
       console.log('activeProvider', wallet?.principal);
       console.log('accountID', accountID);
     }
-  }, [isConnected]);
+    console.log(user, 787878787878);
+    if (user) {
+      console.log(user, 90909);
+    }
+  }, [isConnected, user]);
 
   const createActor = async (values: { canisterId: string }) => {
     setLoading(true);
@@ -266,7 +280,20 @@ const HeaderWallet: React.FC<HeaderWalletProps> = ({ onFilterChange }) => {
 
   return (
     <Wrapper>
-      <ButtonLogin>{isConnected ? '' : <ConnectButton />}</ButtonLogin>
+      {/* magic */}
+
+      <ButtonLogin>
+        {isConnected ? (
+          ''
+        ) : !user ? (
+          <ConnectButton />
+        ) : (
+          <>
+            <WalletDetail />
+            <DisconnectButton />
+          </>
+        )}
+      </ButtonLogin>
       <Content>
         <ConnectDialog />
       </Content>

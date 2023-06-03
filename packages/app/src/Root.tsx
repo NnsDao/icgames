@@ -6,6 +6,8 @@ import '@connect2ic/core/style.css';
 import { Connect2ICProvider } from '@connect2ic/react';
 import { AppProvider, ScrollProvider } from '@horse-racing/react-components';
 import GlobalStyle from '@horse-racing/react-components/style';
+import { UserProvider } from './context/UserContext';
+import { Web3Provider } from './context/Web3Context';
 
 import App from './App';
 
@@ -15,9 +17,13 @@ const Root: React.FC = () => {
       <GlobalStyle />
       <ScrollProvider>
         <AppProvider>
-          <Connect2ICProvider client={client}>
-            <App />
-          </Connect2ICProvider>
+          <Web3Provider>
+            <UserProvider>
+              <Connect2ICProvider client={client}>
+                <App />
+              </Connect2ICProvider>
+            </UserProvider>
+          </Web3Provider>
         </AppProvider>
       </ScrollProvider>
     </>

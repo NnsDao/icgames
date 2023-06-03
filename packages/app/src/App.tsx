@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 // import BlindBox from '@horse-racing/page-blind-box';
 import Home from '@horse-racing/page-home';
