@@ -3,7 +3,6 @@ import type {
   Config,
   Erc721Data,
   Erc721DetailData,
-  Erc721ListData,
   IPaginationOptions,
   NObject,
   OrderData,
@@ -11,6 +10,8 @@ import type {
   ServerListResponse,
   ServerResponse
 } from './types';
+
+import { getPodcastActor } from '../actor';
 
 import { SequenceOrderType } from '@nft-market/contracts-core/types';
 
@@ -65,7 +66,9 @@ export class Api extends Request {
     return this.get(`/collections/${params.id}/attributes`);
   }
 
-  getErc721(params: { address: string,owner?:string }& IPaginationOptions): Promise<ServerListResponse<Erc721DetailData>> {
+  getErc721(
+    params: { address: string; owner?: string } & IPaginationOptions
+  ): Promise<ServerListResponse<Erc721DetailData>> {
     return this.get('/erc721', {
       params
     });
@@ -113,4 +116,15 @@ export class Api extends Request {
   }): Promise<ServerResponse<{ buyerFee: string; signature: string }>> {
     return this.get(`/orders/${params.id}/buyer_fee`);
   }
+
+  // get game list
+  get_canister_status = async (cid: string, arg1) => {
+    const actor = await getPodcastActor(cid, true);
+    const res = await actor.get_canister_status(arg1);
+    console.log('get_canister_status', res);
+    if ('Ok' in res) {
+      return res.Ok;
+    }
+    return Promise.reject([]);
+  };
 }
