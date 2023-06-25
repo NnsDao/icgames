@@ -6,7 +6,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const babel = require('@horse-racing/dev/config/babel-config-webpack.cjs');
-
 const findPackages = require('../../scripts/findPackages');
 
 function mapChunks(name, regs, inc) {
@@ -97,13 +96,14 @@ function createWebpack(context, mode = 'production') {
         },
         {
           exclude: /(node_modules)/,
-          test: /\.(js|mjs|ts|tsx)$/,
+          test: /\.(js|mjs|ts|tsx|app)$/,
           use: [
             require.resolve('thread-loader'),
             {
               loader: require.resolve('babel-loader'),
               options: {
                 ...babel,
+                // presets: ['@babel/preset-env'],
                 plugins: [
                   ...babel.plugins,
                   [
@@ -113,6 +113,7 @@ function createWebpack(context, mode = 'production') {
                       style: true
                     }
                   ]
+                  // '@babel/plugin-proposal-export-namespace-from'
                 ]
               }
             }
@@ -207,6 +208,7 @@ function createWebpack(context, mode = 'production') {
       extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx'],
       fallback: {
         assert: require.resolve('assert/'),
+        buffer: require.resolve('buffer/'),
         crypto: require.resolve('crypto-browserify'),
         http: require.resolve('stream-http'),
         https: require.resolve('https-browserify'),
